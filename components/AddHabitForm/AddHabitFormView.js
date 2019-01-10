@@ -4,7 +4,7 @@ import { Button, View } from 'react-native';
 import { Field } from 'redux-form';
 import RFTextView from '../RFTextInput/RFTextInput';
 
-const AddHabitFormView = ({ handleSubmit }) => (
+const AddHabitFormView = ({ handleSubmit, valid }) => (
   <View>
     <Field
       name="habitName"
@@ -12,6 +12,7 @@ const AddHabitFormView = ({ handleSubmit }) => (
     />
     <Button
       title="Submit"
+      disabled={!valid}
       onPress={handleSubmit}
     />
   </View>
@@ -19,6 +20,7 @@ const AddHabitFormView = ({ handleSubmit }) => (
 
 AddHabitFormView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  valid: PropTypes.bool.isRequired,
 };
 
 export default AddHabitFormView;
