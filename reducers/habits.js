@@ -4,6 +4,7 @@ const ADD_HABIT = 'ADD_HABIT';
 const REMOVE_HABIT = 'REMOVE_HABIT';
 
 const initial = {
+    habitList: [],
     habitName: '',
 };
 
@@ -12,8 +13,14 @@ export const initialState = { ...initial };
 export default function habitReducer(state = initial, action) {
     switch (action.type) {
         case ADD_HABIT: {
-            AsyncStorage.setItem('habitName', action.habitName);
-            return { ...state, habitName: action.habitName };
+            let newState = { ...state};
+            if(state.habitList) {
+                newState = { ...state, habitList: [...state.habitList, action.habit] }
+            } else {
+                newState = { ...state, habitList: [action.habit] }
+            }
+            AsyncStorage.setItem('habitList', JSON.stringify(newState.habitList));
+            return newState;
         }
         case REMOVE_HABIT: {
             return { ...state, habitName: '' };
@@ -23,7 +30,7 @@ export default function habitReducer(state = initial, action) {
     }
 }
 
-export const addHabit = (habitName) => ({
+export const addHabit = (habit) => ({
     type: ADD_HABIT,
-    habitName
+    habit
 });

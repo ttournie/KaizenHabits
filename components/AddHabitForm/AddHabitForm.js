@@ -6,7 +6,8 @@ import { addHabit } from './../../reducers/habits';
 
 class AddHabitForm extends React.Component {
   handleSubmit = ({ habitName }) => {
-    this.props.addHabit(habitName);
+    const habit = {name: habitName}
+    this.props.addHabit(habit);
   }
 
   render() {
@@ -27,11 +28,11 @@ const styles = StyleSheet.create({
   });
 
 const mapStateToProps = (state) => ({
-    habitName: state.habits.habitName,
+    habitList: state.habits.habitList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addHabit: (habitName) => dispatch(addHabit(habitName)),
+  addHabit: (habit) => dispatch(addHabit(habit)),
 });
 
 export default connect(
