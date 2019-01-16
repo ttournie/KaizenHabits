@@ -7,6 +7,7 @@ import HomePage from './components/HomePage/HomePage';
 import AddHabitForm from './components/AddHabitForm/AddHabitForm';
 
 export default class App extends React.Component {
+
   _handleNavigationRequest() {
     this.refs.nav.push({
       component: AddHabitForm,
@@ -24,6 +25,7 @@ export default class App extends React.Component {
               component: HomePage,
               title: '',
               rightButtonTitle: 'Add',
+              leftButtonTitle: 'Edit',
               onRightButtonPress: () => this._handleNavigationRequest(),
             }}
             style={{flex: 1}}

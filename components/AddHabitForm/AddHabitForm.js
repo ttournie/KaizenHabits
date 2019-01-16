@@ -6,11 +6,15 @@ import { addHabit } from './../../reducers/habits';
 
 class AddHabitForm extends React.Component {
   handleSubmit = ({ habitName }) => {
-    const habit = {name: habitName}
+    const habit = {
+      key: habitName,
+      name: habitName
+    }
     this.props.addHabit(habit);
   }
 
   render() {
+    console.log(this.props.editMode)
     return (
         <ScrollView contentContainerStyle={styles.container}>
           <Text>My Habit Form</Text>
