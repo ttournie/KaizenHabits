@@ -23,7 +23,9 @@ export default function habitReducer(state = initial, action) {
             return newState;
         }
         case REMOVE_HABIT: {
-            return { ...state, habitName: '' };
+            return { ...state, 
+                habitList: state.habitList.filter(habit => habit.key !== action.habit.key)
+            };
         }
         default:
             return state;
@@ -32,5 +34,10 @@ export default function habitReducer(state = initial, action) {
 
 export const addHabit = (habit) => ({
     type: ADD_HABIT,
+    habit
+});
+
+export const removeHabit = (habit) => ({
+    type: REMOVE_HABIT,
     habit
 });

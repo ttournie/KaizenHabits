@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, ScrollView, View, FlatList, Modal, TouchableHighlight, Button } from 'react-native';
+import { removeHabit } from '../../reducers/habits';
 
 class HomePage extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -40,6 +41,10 @@ class HomePage extends React.Component {
      this.setState({modalVisible: visible});
     }
 
+    deleteHabit = (item) => {
+        this.props.removeHabit(item);
+      };
+
     render() {
         return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -53,7 +58,11 @@ class HomePage extends React.Component {
             <Text>Open up App.js to start working on your app!</Text>
             <FlatList
                 data={this.props.habitList}
-                renderItem={({item}) => <Text>{item.name}</Text>
+                extraData={this.state}
+                renderItem={({item}) =>
+                    <React.Fragment>
+                        {this.state.editMode && <Button title='-' onPress={() => this.deleteHabit(item)}/>}<Text>{item.name}</Text>
+                    </React.Fragment>
             }
             />
 
@@ -103,5 +112,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    {removeHabit}
 )(HomePage);

@@ -21,7 +21,6 @@ class AddHabitForm extends React.Component {
   }
 
   render() {
-    console.log(this.props.editMode)
     return (
         <ScrollView contentContainerStyle={styles.container}>
           <Text>My Habit Form</Text>
