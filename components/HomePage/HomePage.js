@@ -10,7 +10,7 @@ class HomePage extends React.Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
-          headerTitle: 'Home',
+          headerTitle: 'My Habits',
           headerRight: (
             <Button
               onPress={() => navigation.navigate('AddHabit')}

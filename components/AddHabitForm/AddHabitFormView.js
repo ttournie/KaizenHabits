@@ -7,6 +7,7 @@ import RFTextView from '../RFTextInput/RFTextInput';
 const AddHabitFormView = ({ handleSubmit, valid }) => (
   <View>
     <Field
+      label="Name"
       name="habitName"
       component={RFTextView}
     />
@@ -14,6 +15,7 @@ const AddHabitFormView = ({ handleSubmit, valid }) => (
       title="Submit"
       disabled={!valid}
       onPress={handleSubmit}
+      color="#43c744"
     />
   </View>
 ); 

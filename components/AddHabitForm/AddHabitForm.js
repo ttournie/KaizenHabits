@@ -23,7 +23,6 @@ class AddHabitForm extends React.Component {
   render() {
     return (
         <ScrollView contentContainerStyle={styles.container}>
-          <Text>My Habit Form</Text>
           <AddHabitFormRF onSubmit={this.handleSubmit}/> 
         </ScrollView>
     );
@@ -33,7 +32,9 @@ class AddHabitForm extends React.Component {
 const styles = StyleSheet.create({
     container: {
       backgroundColor: '#fff',
-      alignItems: 'center',
+      marginTop: 20,
+      marginLeft: 10,
+      marginRight: 10,
     },
   });
 
