@@ -1,9 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, ScrollView, View, FlatList, Modal, TouchableHighlight, Button } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, FlatList, Button, TouchableOpacity } from 'react-native';
 import { removeHabit } from '../../reducers/habits';
 
 class HomePage extends React.Component {
+    state = {
+        editMode: false,
+      };
+
     static navigationOptions = ({ navigation }) => {
         return {
           headerTitle: 'Home',
@@ -11,22 +15,17 @@ class HomePage extends React.Component {
             <Button
               onPress={() => navigation.navigate('AddHabit')}
               title="+"
-              color="#000"
+              color="#43c744"
             />
           ),
           headerLeft: (
             <Button
               onPress={navigation.getParam('switchEditMode')}
-              title="edit"
-              color="#000"
+              title={navigation.getParam('EditTile') || 'Edit'}
+              color="#43c744"
             />
           ),
         };
-      };
-
-    state = {
-        modalVisible: false,
-        editMode: false,
       };
 
     componentDidMount() {
@@ -35,11 +34,8 @@ class HomePage extends React.Component {
     
     toggleEditMode = () => {
         this.setState({ editMode: !this.state.editMode });
+        this.props.navigation.setParams({ EditTile: this.state.editMode ? 'Edit' : 'Done' });
       };
-    
-    setModalVisible(visible) {
-     this.setState({modalVisible: visible});
-    }
 
     deleteHabit = (item) => {
         this.props.removeHabit(item);
@@ -48,54 +44,21 @@ class HomePage extends React.Component {
     render() {
         return (
         <ScrollView contentContainerStyle={styles.container}>
-            <View style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-            }}>
-                <View style={{height: 50, backgroundColor: 'powderblue'}} />
-            </View>
-            <Text>Open up App.js to start working on your app!</Text>
             <FlatList
+                style={styles.habitContainer}
                 data={this.props.habitList}
                 extraData={this.state}
                 renderItem={({item}) =>
-                    <React.Fragment>
-                        {this.state.editMode && <Button title='-' onPress={() => this.deleteHabit(item)}/>}<Text>{item.name}</Text>
-                    </React.Fragment>
+                    <View style={styles.habitItemContainer}>
+                        {this.state.editMode &&
+                                <TouchableOpacity style={styles.deleteButton} onPress={() => this.deleteHabit(item)}>
+                                    <Text style={styles.deleteButtonText}>delete</Text>
+                                </TouchableOpacity>
+                        }
+                            <Text>{item.name}</Text>
+                    </View>
             }
             />
-
-        <TouchableHighlight
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
-
-        {this.state.editMode && <Text>Edit Mode</Text>}
-
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text>Hello World!</Text>
-
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
-
         </ScrollView>
         );
     }
@@ -103,8 +66,34 @@ class HomePage extends React.Component {
   
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
     },
+    habitContainer: {
+        marginTop: 10,
+    },
+    habitItemContainer: {
+        flex:1,
+        flexDirection: "row",
+        alignItems: "center",
+        height: 70,
+        borderWidth: 1,
+        marginTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 10,
+        borderRadius: 8,
+        borderColor: "#CED0CE",
+        paddingTop: 20,
+        paddingBottom: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+    },
+    deleteButton: {
+        marginRight: 20,
+    },
+    deleteButtonText: {
+        color:"#43c744"
+    }
 });
 
 const mapStateToProps = (state) => ({
