@@ -1,8 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, ScrollView, View, FlatList, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, FlatList, Modal, TouchableHighlight, Button } from 'react-native';
 
 class HomePage extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+          headerTitle: 'Home',
+          headerRight: (
+            <Button
+              onPress={() => navigation.navigate('AddHabit')}
+              title="+"
+              color="#000"
+            />
+          ),
+        };
+      };
+      
     state = {
         modalVisible: false,
       };

@@ -1,12 +1,20 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { NavigatorIOS } from 'react-native';
+import { createStackNavigator, createAppContainer } from "react-navigation";
 import { PersistGate } from 'redux-persist/integration/react'
 import store, { persistor } from './store';
 import HomePage from './components/HomePage/HomePage';
 import AddHabitForm from './components/AddHabitForm/AddHabitForm';
 
-export default class App extends React.Component {
+const AppNavigator = createStackNavigator({
+  Home: HomePage,
+  AddHabit: AddHabitForm
+});
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export class App extends React.Component {
+  
 
   _handleNavigationRequest() {
     this.refs.nav.push({
@@ -19,19 +27,11 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <NavigatorIOS
-            ref='nav'
-            initialRoute={{
-              component: HomePage,
-              title: '',
-              rightButtonTitle: 'Add',
-              leftButtonTitle: 'Edit',
-              onRightButtonPress: () => this._handleNavigationRequest(),
-            }}
-            style={{flex: 1}}
-          />
+          <AppContainer/>
         </PersistGate>
       </Provider>
     );
   }
 }
+
+export default App;
