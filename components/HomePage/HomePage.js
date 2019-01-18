@@ -13,11 +13,27 @@ class HomePage extends React.Component {
               color="#000"
             />
           ),
+          headerLeft: (
+            <Button
+              onPress={navigation.getParam('switchEditMode')}
+              title="edit"
+              color="#000"
+            />
+          ),
         };
       };
-      
+
     state = {
         modalVisible: false,
+        editMode: false,
+      };
+
+    componentDidMount() {
+        this.props.navigation.setParams({ switchEditMode: this.toggleEditMode });
+    }
+    
+    toggleEditMode = () => {
+        this.setState({ editMode: !this.state.editMode });
       };
     
     setModalVisible(visible) {
@@ -47,6 +63,8 @@ class HomePage extends React.Component {
           }}>
           <Text>Show Modal</Text>
         </TouchableHighlight>
+
+        {this.state.editMode && <Text>Edit Mode</Text>}
 
         <Modal
           animationType="slide"

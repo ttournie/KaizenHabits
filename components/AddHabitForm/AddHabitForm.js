@@ -5,12 +5,19 @@ import AddHabitFormRF from './AddHabitFormRF';
 import { addHabit } from './../../reducers/habits';
 
 class AddHabitForm extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: 'Add Habit',
+    };
+  };
+
   handleSubmit = ({ habitName }) => {
     const habit = {
       key: habitName,
       name: habitName
     }
     this.props.addHabit(habit);
+    this.props.navigation.navigate('Home');
   }
 
   render() {

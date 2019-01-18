@@ -14,15 +14,6 @@ const AppNavigator = createStackNavigator({
 const AppContainer = createAppContainer(AppNavigator);
 
 export class App extends React.Component {
-  
-
-  _handleNavigationRequest() {
-    this.refs.nav.push({
-      component: AddHabitForm,
-      title: 'Add a new habit',
-    });
-  }
-
   render() {
     return (
       <Provider store={store}>
