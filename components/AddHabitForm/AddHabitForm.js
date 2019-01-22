@@ -14,7 +14,8 @@ class AddHabitForm extends React.Component {
   handleSubmit = ({ habitName }) => {
     const habit = {
       key: habitName,
-      name: habitName
+      name: habitName,
+      done: false,
     }
     this.props.addHabit(habit);
     this.props.navigation.navigate('Home');

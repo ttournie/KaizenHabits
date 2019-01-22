@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, ScrollView, View, FlatList, Button, TouchableOpacity } from 'react-native';
-import { removeHabit } from '../../reducers/habits';
+import { removeHabit, checkHabit, unCheckHabit } from '../../reducers/habits';
 
 class HomePage extends React.Component {
     state = {
@@ -41,22 +41,37 @@ class HomePage extends React.Component {
         this.props.removeHabit(item);
       };
 
+    toggleHabit = (item) => {
+        item.done ? this.props.unCheckHabit(item) : this.props.checkHabit(item);
+    };
+
+    renderHabitItem = (item) => (
+        <React.Fragment>
+            {this.state.editMode && <TouchableOpacity style={styles.deleteButton} onPress={() => this.deleteHabit(item)}>
+                <Text style={styles.deleteButtonText}>delete</Text>
+            </TouchableOpacity>}
+            <Text>{item.name}</Text>
+        </React.Fragment>
+    )
+
     render() {
         return (
         <ScrollView contentContainerStyle={styles.container}>
+            {this.props.habitList.length === 0 && <Text>Start adding habits</Text>}
             <FlatList
                 style={styles.habitContainer}
                 data={this.props.habitList}
                 extraData={this.state}
-                renderItem={({item}) =>
-                    <View style={styles.habitItemContainer}>
-                        {this.state.editMode &&
-                                <TouchableOpacity style={styles.deleteButton} onPress={() => this.deleteHabit(item)}>
-                                    <Text style={styles.deleteButtonText}>delete</Text>
-                                </TouchableOpacity>
-                        }
-                            <Text>{item.name}</Text>
+                renderItem={({item}) => (
+                    !this.state.editMode ? 
+                    <TouchableOpacity style={[{ backgroundColor: item.done ? '#CED0CE' : '#fff' }, styles.habitItemContainer]} onPress={() => this.toggleHabit(item)}>
+                        {this.renderHabitItem(item)}
+                    </TouchableOpacity>
+                    :
+                    <View style={[{ backgroundColor: item.done ? '#CED0CE' : '#fff' }, styles.habitItemContainer]}>
+                        {this.renderHabitItem(item)}
                     </View>
+                )
             }
             />
         </ScrollView>
@@ -102,5 +117,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    {removeHabit}
+    {removeHabit, checkHabit, unCheckHabit}
 )(HomePage);
