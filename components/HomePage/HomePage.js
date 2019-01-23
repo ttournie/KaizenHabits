@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, ScrollView, View, FlatList, Button, TouchableOpacity } from 'react-native';
+import { Animated, StyleSheet, Text, ScrollView, View, FlatList, Button, TouchableOpacity } from 'react-native';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import { removeHabit, checkHabit, unCheckHabit } from '../../reducers/habits';
 
 class HomePage extends React.Component {
@@ -53,26 +54,42 @@ class HomePage extends React.Component {
             <Text>{item.name}</Text>
         </React.Fragment>
     )
+    
+    onSwipeValueChange = (swipeData) => {
+        const { key, value } = swipeData;
+        console.log(value)
+        if (value > 80) {
+            const habit = this.props.habitList.find(item => item.key === key);
+            habit.done ? this.props.unCheckHabit(habit) : this.props.checkHabit(habit);
+        }
+    }
 
     render() {
         return (
         <ScrollView contentContainerStyle={styles.container}>
             {this.props.habitList.length === 0 && <Text>Start adding habits</Text>}
-            <FlatList
+            <SwipeListView
+                useFlatList
                 style={styles.habitContainer}
                 data={this.props.habitList}
                 extraData={this.state}
                 renderItem={({item}) => (
-                    !this.state.editMode ? 
-                    <TouchableOpacity style={[{ backgroundColor: item.done ? '#CED0CE' : '#fff' }, styles.habitItemContainer]} onPress={() => this.toggleHabit(item)}>
+                    <View style={styles.habitItemContainer}>
                         {this.renderHabitItem(item)}
-                    </TouchableOpacity>
-                    :
-                    <View style={[{ backgroundColor: item.done ? '#CED0CE' : '#fff' }, styles.habitItemContainer]}>
-                        {this.renderHabitItem(item)}
+                        {item.done && <View style={styles.doneIcon}><Text>Done</Text></View>}
                     </View>
                 )
             }
+            renderHiddenItem={(data) => (
+                <View style={styles.rowBack}>
+                    <View style={styles.doneButton}><Text>Left</Text></View>
+                    <Text>Right</Text>
+                </View>
+                )
+            }
+            leftOpenValue={9000}
+            rightOpenValue={-75}
+            onSwipeValueChange={this.onSwipeValueChange}
             />
         </ScrollView>
         );
@@ -91,24 +108,38 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         height: 70,
-        borderWidth: 1,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
         marginTop: 10,
-        marginLeft: 10,
-        marginRight: 10,
         marginBottom: 10,
-        borderRadius: 8,
+        backgroundColor: "#fff",
         borderColor: "#CED0CE",
-        paddingTop: 20,
-        paddingBottom: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
     },
     deleteButton: {
         marginRight: 20,
     },
     deleteButtonText: {
         color:"#43c744"
-    }
+    },
+    doneIcon: {
+        flex:1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    rowBack: {
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        backgroundColor: "#43c744",
+        alignItems: 'center',
+        borderColor: "#CED0CE",
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: 15,
+        paddingRight: 15,
+        marginTop: 10,
+        marginBottom: 10,
+      },
 });
 
 const mapStateToProps = (state) => ({
