@@ -1,15 +1,14 @@
 import React from 'react';
 import { BarChart, XAxis } from 'react-native-svg-charts'
-import {View} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
 
 class StreakChart extends React.PureComponent {
-
     convertStreakToData() {
         const date = new Date;
         const currentYear = date.getFullYear();
         let currentYearData = [];
         for(i=1; i < 13; i++) {
-            const monthStreak = this.props.streak.filter(item => {
+            const monthStreak = this.props.habit.streak.filter(item => {
                 return item.split('-')[1] == i && item.split('-')[2] == currentYear;
             })
             currentYearData.push(monthStreak);
@@ -23,17 +22,18 @@ class StreakChart extends React.PureComponent {
         const data   =  this.convertStreakToData();
 
         return (
-            <View>
+            <View style={styles.container}>
+                <Text>{this.props.habit.name}</Text>
                 <BarChart
                     showGrid={ false }
-                    style={{ height: 200 }}
+                    style={styles.chart}
                     data={ data }
                     svg={{ fill }}
-                    contentInset={{ top: 30, bottom: 30 }}
+                    contentInset={{ top: 30, bottom: 10 }}
                 >
                 </BarChart>
                 <XAxis
-                    style={{ marginHorizontal: 0 }}
+                    style={styles.axis}
                     data={ data }
                     formatLabel={ (value, index) => index+1 }
                     svg={{ fontSize: 10, fill: 'black' }}
@@ -43,5 +43,17 @@ class StreakChart extends React.PureComponent {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      backgroundColor: '#fff',
+    },
+    chart: {
+        height: 200
+    },
+    axis: {
+        
+    }
+  });
 
 export default StreakChart;

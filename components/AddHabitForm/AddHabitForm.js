@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import { connect } from 'react-redux';
 import AddHabitFormRF from './AddHabitFormRF';
 import { addHabit } from './../../reducers/habits';

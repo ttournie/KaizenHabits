@@ -13,11 +13,10 @@ class GraphScreen extends React.Component {
     render() {
         return (
             <ScrollView contentContainerStyle={styles.container}>
-                <Text>Weekly chart</Text>
+                <Text style={styles.title}>Monthly chart</Text>
                 {this.props.habitList.map(habit => (
                     <View key={habit.key}>
-                        <Text>{habit.name}</Text>
-                        <StreakChart streak={habit.streak}/>
+                        <StreakChart habit={habit}/>
                     </View>
                 ))}
             </ScrollView>
@@ -28,7 +27,15 @@ class GraphScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#fff",
+        marginTop: 20,
+        marginLeft: 10,
+        marginRight: 10,
     },
+    title: {
+        fontSize: 20,
+        textAlign: 'center',
+        marginBottom: 15,
+    }
 });
 
 const mapStateToProps = ({habits}) => ({

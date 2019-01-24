@@ -3,12 +3,12 @@ import { Provider } from 'react-redux';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from "react-navigation";
 import { PersistGate } from 'redux-persist/integration/react'
 import store, { persistor } from './store';
-import HomePage from './components/HomePage/HomePage';
+import HomeScreen from './components/HomeScreen/HomeScreen';
 import AddHabitForm from './components/AddHabitForm/AddHabitForm';
 import GraphScreen from './components/GraphScreen/GraphScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomePage,
+  Home: HomeScreen,
   AddHabit: AddHabitForm
 });
 

@@ -5,7 +5,7 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import { removeHabit, checkHabit, unCheckHabit } from '../../reducers/habits';
 import { isHabitDoneToday } from '../../utils/dates';
 
-class HomePage extends React.Component {
+class HomeScreen extends React.Component {
     state = {
         editMode: false,
       };
@@ -144,4 +144,4 @@ const mapStateToProps = (state) => ({
 export default connect(
     mapStateToProps,
     {removeHabit, checkHabit, unCheckHabit}
-)(HomePage);
+)(HomeScreen);
