@@ -12,9 +12,13 @@ const HomeStack = createStackNavigator({
   AddHabit: AddHabitForm
 });
 
+const ChartStack = createStackNavigator({
+  Charts: GraphScreen,
+});
+
 const TabNavigator = createBottomTabNavigator({
   Home: HomeStack,
-  Overview: GraphScreen,
+  Charts: ChartStack,
 });
 
 const AppContainer = createAppContainer(TabNavigator);

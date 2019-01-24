@@ -5,7 +5,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import HabitReducer from './reducers/habits';
 
 // For testing purpose
-AsyncStorage.clear() 
+// AsyncStorage.clear() 
 
 const rootReducer = combineReducers({
     form: formReducer,
