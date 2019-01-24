@@ -1,5 +1,6 @@
 import React from 'react';
-import { BarChart, Grid } from 'react-native-svg-charts'
+import { BarChart, XAxis } from 'react-native-svg-charts'
+import {View} from 'react-native';
 
 class StreakChart extends React.PureComponent {
 
@@ -18,19 +19,27 @@ class StreakChart extends React.PureComponent {
     }
 
     render() {
-
         const fill = '#43c744'
         const data   =  this.convertStreakToData();
 
         return (
-            <BarChart
-                showGrid={ false }
-                style={{ height: 200 }}
-                data={ data }
-                svg={{ fill }}
-                contentInset={{ top: 30, bottom: 30 }}
-            >
-            </BarChart>
+            <View>
+                <BarChart
+                    showGrid={ false }
+                    style={{ height: 200 }}
+                    data={ data }
+                    svg={{ fill }}
+                    contentInset={{ top: 30, bottom: 30 }}
+                >
+                </BarChart>
+                <XAxis
+                    style={{ marginHorizontal: 0 }}
+                    data={ data }
+                    formatLabel={ (value, index) => index+1 }
+                    svg={{ fontSize: 10, fill: 'black' }}
+                    contentInset={{ left: 15, right: 15 }}
+                />
+            </View>
         )
     }
 }
