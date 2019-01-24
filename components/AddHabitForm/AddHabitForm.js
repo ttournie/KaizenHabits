@@ -15,7 +15,7 @@ class AddHabitForm extends React.Component {
     const habit = {
       key: habitName,
       name: habitName,
-      done: false,
+      streak: [],
     }
     this.props.addHabit(habit);
     this.props.navigation.navigate('Home');

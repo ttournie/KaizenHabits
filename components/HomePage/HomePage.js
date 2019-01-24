@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, ScrollView, View, Button, TouchableOpacity } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { removeHabit, checkHabit, unCheckHabit } from '../../reducers/habits';
+import { isHabitDoneToday } from '../../utils/dates';
 
 class HomePage extends React.Component {
     state = {
@@ -42,10 +43,6 @@ class HomePage extends React.Component {
         this.props.removeHabit(item);
       };
 
-    toggleHabit = (item) => {
-        item.done ? this.props.unCheckHabit(item) : this.props.checkHabit(item);
-    };
-
     renderHabitItem = (item) => (
         <React.Fragment>
             {this.state.editMode && <TouchableOpacity style={styles.deleteButton} onPress={() => this.deleteHabit(item)}>
@@ -59,7 +56,7 @@ class HomePage extends React.Component {
         const { key, value } = swipeData;
         if (value > 80) {
             const habit = this.props.habitList.find(item => item.key === key);
-            habit.done ? this.props.unCheckHabit(habit) : this.props.checkHabit(habit);
+            isHabitDoneToday(habit) ? this.props.unCheckHabit(habit) : this.props.checkHabit(habit);
         }
     }
 
@@ -76,7 +73,7 @@ class HomePage extends React.Component {
                 renderItem={({item}) => (
                     <View style={styles.habitItemContainer}>
                         {this.renderHabitItem(item)}
-                        {item.done && <View style={styles.doneIcon}><Text>Done</Text></View>}
+                        {isHabitDoneToday(item) && <View style={styles.doneIcon}><Text>Done</Text></View>}
                     </View>
                 )
             }

@@ -1,4 +1,5 @@
 import { AsyncStorage } from "react-native"
+import { getTodayFormatedDate } from '../utils/dates';
 
 const ADD_HABIT = 'ADD_HABIT';
 const REMOVE_HABIT = 'REMOVE_HABIT';
@@ -32,7 +33,7 @@ export default function habitReducer(state = initial, action) {
             const newState = {...state,
                 habitList: state.habitList.map(habit => {
                     if(habit.key === action.habit.key) {
-                        return {...habit, done: true}
+                        return {...habit, streak: [...habit.streak, getTodayFormatedDate()]}
                     }
                     return habit
                 }),
@@ -43,7 +44,7 @@ export default function habitReducer(state = initial, action) {
             const newState = {...state,
                 habitList: state.habitList.map(habit => {
                     if(habit.key === action.habit.key) {
-                        return {...habit, done: false}
+                        return {...habit, streak: habit.streak.filter(item => item !== getTodayFormatedDate())}
                     }
                     return habit
                 }),
