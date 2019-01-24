@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Animated, StyleSheet, Text, ScrollView, View, FlatList, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, Button, TouchableOpacity } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { removeHabit, checkHabit, unCheckHabit } from '../../reducers/habits';
 
