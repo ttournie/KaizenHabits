@@ -57,7 +57,6 @@ class HomePage extends React.Component {
     
     onSwipeValueChange = (swipeData) => {
         const { key, value } = swipeData;
-        console.log(value)
         if (value > 80) {
             const habit = this.props.habitList.find(item => item.key === key);
             habit.done ? this.props.unCheckHabit(habit) : this.props.checkHabit(habit);
@@ -70,6 +69,7 @@ class HomePage extends React.Component {
             {this.props.habitList.length === 0 && <Text>Start adding habits</Text>}
             <SwipeListView
                 useFlatList
+                closeOnScroll
                 style={styles.habitContainer}
                 data={this.props.habitList}
                 extraData={this.state}
@@ -87,9 +87,10 @@ class HomePage extends React.Component {
                 </View>
                 )
             }
-            leftOpenValue={9000}
+            leftOpenValue={375}
             rightOpenValue={-75}
             onSwipeValueChange={this.onSwipeValueChange}
+            stopLeftSwipe={120}
             />
         </ScrollView>
         );
@@ -110,8 +111,7 @@ const styles = StyleSheet.create({
         height: 70,
         borderTopWidth: 1,
         borderBottomWidth: 1,
-        marginTop: 10,
-        marginBottom: 10,
+        paddingLeft: 10,
         backgroundColor: "#fff",
         borderColor: "#CED0CE",
     },
@@ -137,8 +137,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingLeft: 15,
         paddingRight: 15,
-        marginTop: 10,
-        marginBottom: 10,
       },
 });
 
