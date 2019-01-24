@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import store, { persistor } from './store';
 import HomePage from './components/HomePage/HomePage';
 import AddHabitForm from './components/AddHabitForm/AddHabitForm';
+import GraphScreen from './components/GraphScreen/GraphScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomePage,
@@ -13,6 +14,7 @@ const HomeStack = createStackNavigator({
 
 const TabNavigator = createBottomTabNavigator({
   Home: HomeStack,
+  Overview: GraphScreen,
 });
 
 const AppContainer = createAppContainer(TabNavigator);
