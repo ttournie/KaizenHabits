@@ -44,9 +44,11 @@ class StreakChart extends React.PureComponent {
                     showGrid={ false }
                     style={styles.chart}
                     data={ data }
-                    svg={{ fill }}
+                    svg={{
+                        fill
+                    }}
                     yAccessor={({ item }) => item}
-                    contentInset={{ top: 30, bottom: 10 }}
+                    contentInset={{ top: 30 }}
                 >
                 <Value/>
                 </BarChart>
@@ -67,7 +69,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
     },
     chart: {
-        height: 200
+        height: 200,
+        marginBottom: 5,
     },
     valueContainer: {
         flex: 1,
