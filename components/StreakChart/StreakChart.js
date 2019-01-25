@@ -1,6 +1,7 @@
 import React from 'react';
 import { BarChart, XAxis } from 'react-native-svg-charts'
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import { Svg, Text } from 'react-native-svg';
 
 class StreakChart extends React.PureComponent {
     convertStreakToData() {
@@ -21,16 +22,33 @@ class StreakChart extends React.PureComponent {
         const fill = '#43c744'
         const data   =  this.convertStreakToData();
 
+        const Value = ({x, y}) => {
+            return data.map((item, index) => (
+                item > 0 &&
+                <Svg height="200" width="375" key={index}>
+                    <Text
+                        fontSize="12"
+                        x={x(index) + 9}
+                        y={y(item) - 5}
+                    >
+                        {item}
+                    </Text>
+                </Svg>
+            ));
+        }
+
+
         return (
             <View style={styles.container}>
-                <Text>{this.props.habit.name}</Text>
                 <BarChart
                     showGrid={ false }
                     style={styles.chart}
                     data={ data }
                     svg={{ fill }}
+                    yAccessor={({ item }) => item}
                     contentInset={{ top: 30, bottom: 10 }}
                 >
+                <Value/>
                 </BarChart>
                 <XAxis
                     style={styles.axis}
@@ -51,8 +69,11 @@ const styles = StyleSheet.create({
     chart: {
         height: 200
     },
-    axis: {
-        
+    valueContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: 'red',
     }
   });
 
