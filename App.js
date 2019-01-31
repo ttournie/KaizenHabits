@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import { createBottomTabNavigator, createStackNavigator, createAppContainer } from "react-navigation";
 import { PersistGate } from 'redux-persist/integration/react'
 import { Ionicons } from '@expo/vector-icons';
-import {StyleSheet, View} from 'react-native';
 import store, { persistor } from './store';
 import HomeScreen from './components/HomeScreen/HomeScreen';
 import AddHabitForm from './components/AddHabitForm/AddHabitForm';
@@ -22,14 +21,24 @@ const TabNavigator = createBottomTabNavigator({
   Home: {
     screen: HomeStack,
     navigationOptions: {
-      tabBarIcon: <Ionicons name="md-home" size={30} color='#CED0CE'/>,
+      tabBarIcon: ({ focused }) => {
+        const color = focused? '#43c744' : '#CED0CE';
+        return (
+          <Ionicons name="md-home" size={30} color={color}/>
+          );
+      }
     }
   },
   Charts: {
     screen: ChartStack,
     
     navigationOptions: {
-      tabBarIcon: <Ionicons name="md-stats" size={30} color='#CED0CE'/>,
+      tabBarIcon: ({ focused }) => {
+        const color = focused? '#43c744' : '#CED0CE';
+        return (
+          <Ionicons name="md-stats" size={30} color={color}/>
+          );
+      }    
     }
   },
 },
@@ -37,7 +46,7 @@ const TabNavigator = createBottomTabNavigator({
   tabBarOptions: {
     showLabel: false,
     tabStyle: {
-        marginTop: 20,
+        marginTop: 10,
     }
   },
 }

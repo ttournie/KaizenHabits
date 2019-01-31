@@ -49,6 +49,7 @@ class StreakChart extends React.PureComponent {
                     }}
                     yAccessor={({ item }) => item}
                     contentInset={{ top: 30 }}
+                    animate={true}
                 >
                 <Value/>
                 </BarChart>

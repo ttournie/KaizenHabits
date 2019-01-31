@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, ScrollView, View, Button, TouchableOpacity } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { Ionicons } from '@expo/vector-icons';
 import { removeHabit, checkHabit, unCheckHabit } from '../../reducers/habits';
 import { isHabitDoneToday } from '../../utils/dates';
 
@@ -14,11 +15,12 @@ class HomeScreen extends React.Component {
         return {
           headerTitle: 'My Habits',
           headerRight: (
-            <Button
-              onPress={() => navigation.navigate('AddHabit')}
-              title="+"
-              color="#43c744"
-            />
+            <TouchableOpacity
+                style={styles.addButton}
+                onPress={() => navigation.navigate('AddHabit')}
+            >
+                <Ionicons name="md-add" color="#43c744" size={25} />
+            </TouchableOpacity>
           ),
           headerLeft: (
             <Button
@@ -73,7 +75,7 @@ class HomeScreen extends React.Component {
                 renderItem={({item}) => (
                     <View style={styles.habitItemContainer}>
                         {this.renderHabitItem(item)}
-                        {isHabitDoneToday(item) && <View style={styles.doneIcon}><Text>Done</Text></View>}
+                        {isHabitDoneToday(item) && <View style={styles.doneIcon}><Ionicons color='#43c744' name="md-checkmark-circle" size={25} /></View>}
                     </View>
                 )
             }
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: "row",
         alignItems: "center",
-        height: 70,
+        height: 60,
         borderTopWidth: 1,
         borderBottomWidth: 1,
         paddingLeft: 10,
@@ -118,10 +120,14 @@ const styles = StyleSheet.create({
     deleteButtonText: {
         color:"#43c744"
     },
+    addButton: {
+        marginRight: 10,
+    },
     doneIcon: {
         flex:1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
+        marginRight: 10,
     },
     rowBack: {
         borderTopWidth: 1,
