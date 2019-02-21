@@ -1,22 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { StyleSheet, TextInput, Text } from 'react-native';
+import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
-const RFTextInput = ({
-  input: { onChange, onBlur, onFocus, value },
-  meta: { error, touched, valid },
-  label
+const RFRadioForm = ({
+  input: { onChange, value },
+  values
 }) => (
     <React.Fragment>
-      <TextInput
-        onChangeText={onChange}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        value={value}
-        placeholder={label}
-        style={[{ borderColor: !valid && touched ? 'red' : 'gray' }, styles.input]}
-      />
-      {!valid && touched && <Text style={styles.error}>{error}</Text>}
+      <RadioForm
+        radio_props={values}
+        initial={0}
+        onPress={value => onChange(value)}
+        />
     </React.Fragment>
   );
 
@@ -35,12 +31,12 @@ const styles = StyleSheet.create({
   }
 });
 
-RFTextInput.propTypes = {
+RFRadioForm.propTypes = {
   input: PropTypes.shape({
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string.isRequired,
   }).isRequired,
-  label: PropTypes.string.isRequired,
+  values: PropTypes.arrayOf(PropTypes.object),
 }
 
-export default RFTextInput;
+export default RFRadioForm;

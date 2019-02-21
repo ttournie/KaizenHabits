@@ -11,12 +11,13 @@ class AddHabitForm extends React.Component {
     };
   };
 
-  handleSubmit = ({ habitName }) => {
+  handleSubmit = ({ habitName, habitFrequency }) => {
     const habit = {
       key: habitName,
       name: habitName,
       streak: [],
     }
+    console.log(habitFrequency);
     this.props.addHabit(habit);
     this.props.navigation.navigate('Home');
   }
